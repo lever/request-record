@@ -8,12 +8,14 @@ path = require 'path'
 fs = require 'fs'
 # Create connection
 
-Message = (connection) ->
+Message = (connection, options) ->
   # Inherit from event emitter
   that = this
   EventEmitter.call this
   # Save the connection
   @connection = connection
+  # Save the options
+  @options = options
   # If there is a body already, don't buffer
   if connection.body
     that.body = connection.body
@@ -52,16 +54,16 @@ _.extend Message.prototype,
       return
     ), this)
 
-    # if typeof info.files == 'object'
-    #   for fieldName of info.files
-    #     localPath = info.files[fieldName].path
-    #     absPath = path.resolve process.cwd(), localPath
-    #     console.log 'absPath of file', absPath
-    #     fileStream = fs.createReadStream absPath
-    #     fileStream.pipe concat (buff) ->
-    #       b64 = buff.toString('base64')
-    #       info.files[fieldName].b64 = b64
-
+    # Copy files included in the request in the fixture's directory
+    if typeof info.files == 'object'
+      for fieldName of info.files
+        localPath = info.files[fieldName].path
+        absPath = path.resolve process.cwd(), localPath
+        dest = path.resolve process.cwd(), @options.fixtureDir, info.files[fieldName].name
+        fileStream = fs.createReadStream absPath
+        writeStream = fs.createWriteStream dest
+        fileStream.pipe writeStream
+        info.files[fieldName].path = dest
 
     return info
   getRequestInfo: ->

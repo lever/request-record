@@ -73,7 +73,7 @@ class Recorder
     @store.get id, (err, requestBin) =>
       throw err if err
       requestBin = requestBin || []
-      msg = new Message req
+      msg = new Message req, @options
       msgInfo = msg.getRequestInfo()
       requestBin.push msgInfo
       @store.set id, requestBin, done

@@ -10,7 +10,8 @@ fs = require 'fs'
 recorder = null
 servers = []
 recorderOpts =
-  fixtureDir: __dirname + '/fixtures'
+  # fixtureDir: __dirname + '/fixtures'
+  fixtureDir: '/tmp/fixtures'
   waitForWrite: true
 PORT = process.env.PORT || process.env.LEVER_PORT || 4080
 recorderBaseUrl = "http://localhost:#{PORT}"
@@ -23,7 +24,7 @@ createServer = (port, isRecorder) ->
   app.use bodyParser.json()
   app.use bodyParser.raw()
   app.use bodyParser.text()
-  app.use multer {dest: './uploads/'}
+  app.use multer {dest: '../../uploads/'}
   app.use recorder.middleware() if isRecorder
   app.use (req, res, next) ->
     # return request information so we can verify that
