@@ -1,0 +1,21 @@
+[
+  {
+    "httpVersion": "1.1",
+    "headers": {
+      "user-agent": "Mocha Test Runner 1.0",
+      "some-custom-header": "nom noms",
+      "host": "localhost:4080",
+      "content-type": "application/x-www-form-urlencoded",
+      "content-length": "21",
+      "connection": "keep-alive"
+    },
+    "trailers": {},
+    "method": "POST",
+    "url": "/test2?box=share-123",
+    "files": {},
+    "body": {
+      "some": "object",
+      "key": "value"
+    }
+  }
+]

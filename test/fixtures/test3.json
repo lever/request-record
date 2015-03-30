@@ -1,0 +1,34 @@
+[
+  {
+    "httpVersion": "1.1",
+    "headers": {
+      "user-agent": "Mocha Test Runner 1.0",
+      "some-custom-header": "nom noms",
+      "host": "localhost:4080",
+      "content-type": "multipart/form-data; boundary=--------------------------862580699913241659952543",
+      "content-length": "62931",
+      "connection": "keep-alive"
+    },
+    "trailers": {},
+    "method": "POST",
+    "url": "/test3?box=share-123",
+    "files": {
+      "some_file": {
+        "fieldname": "some_file",
+        "originalname": "panda.jpg",
+        "name": "c5b6977d79dfc02314bfe8da15e3b901.jpg",
+        "encoding": "7bit",
+        "mimetype": "image/jpeg",
+        "path": "uploads/c5b6977d79dfc02314bfe8da15e3b901.jpg",
+        "extension": "jpg",
+        "size": 62505,
+        "truncated": false,
+        "buffer": null
+      }
+    },
+    "body": {
+      "some": "object",
+      "key": "value"
+    }
+  }
+]
