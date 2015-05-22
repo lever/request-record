@@ -10,7 +10,8 @@ class Recorder
   constructor: (@options={}) ->
     @mode = @options.mode || 'record'
     @baseUrl = @options.baseUrl
-    @store = new Store @options.fixtureDir || defaultFixtureDir
+    @options.fixtureDir ||= defaultFixtureDir
+    @store = new Store @options.fixtureDir
 
     @store.getUrl = (url, cb) ->
       id = urlUtil.parse(url).pathname

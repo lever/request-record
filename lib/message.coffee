@@ -8,7 +8,7 @@ path = require 'path'
 fs = require 'fs'
 # Create connection
 
-Message = (connection, options) ->
+Message = (connection, options={}) ->
   # Inherit from event emitter
   that = this
   EventEmitter.call this
@@ -54,16 +54,47 @@ _.extend Message.prototype,
       return
     ), this)
 
+    # Flatten files
+    # Some body parsers
+    flattenFiles = (files) ->
+      isFlat = true
+      for fieldName, file of files
+        # normalize casing across multiple body parsers
+        file.fieldname = file.fieldName if file.fieldName
+        # if this is not a file object, the file(s) is/are
+        # nested in this object somehwere
+        continue if !isFlat
+        if !file.path && typeof file == 'object'
+          isFlat = false
+          # remove the current layer of nesting
+          _.extend files, file
+          # delete the current level of nesting
+          delete files[fieldName]
+        else if file.fieldname && !files[file.fieldname] && file.fieldname != fieldName
+          files[file.fieldname] = file
+          delete files[fieldName]
+
+      if isFlat
+        return files
+      else
+        return flattenFiles files
+
+    info.files = flattenFiles info.files if info.files
+
     # Copy files included in the request in the fixture's directory
+    # and cleanup the file data
     if typeof info.files == 'object'
       for fieldName of info.files
         localPath = info.files[fieldName].path
         absPath = path.resolve process.cwd(), localPath
-        dest = path.resolve process.cwd(), @options.fixtureDir, info.files[fieldName].name
+        dest = path.resolve process.cwd(), @options.fixtureDir, path.basename absPath
         fileStream = fs.createReadStream absPath
         writeStream = fs.createWriteStream dest
         fileStream.pipe writeStream
         info.files[fieldName].path = dest
+        # prune some uneeded data from the file object
+        delete info.files[fieldName].ws if info.files[fieldName].ws
+        delete info.files[fieldName].headers if info.files[fieldName].headers
 
     return info
   getRequestInfo: ->
