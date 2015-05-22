@@ -1,6 +1,6 @@
 {
   "name": "request-record",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "record request fixtures and play them back to a targetted server for testing",
   "repository": "https://github.com/lever/request-record",
   "main": "index.coffee",
