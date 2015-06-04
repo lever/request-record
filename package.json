@@ -3,7 +3,6 @@
   "version": "0.1.2",
   "description": "record request fixtures and play them back to a targetted server for testing",
   "repository": "https://github.com/lever/request-record",
-  "main": "index.coffee",
   "dependencies": {
     "nine-track": "^3.0.1",
     "fs-memory-store": "^0.2.0",
