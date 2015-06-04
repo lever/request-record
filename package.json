@@ -1,6 +1,6 @@
 {
   "name": "request-record",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "record request fixtures and play them back to a targetted server for testing",
   "repository": "https://github.com/lever/request-record",
   "dependencies": {
